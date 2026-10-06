@@ -5,6 +5,7 @@
         <nav class="main-nav">
             <a href="{{ url('/') }}">Главная</a>
             <a href="{{ url('/category') }}">Категория</a>
+            <a href="{{ url('/journalist') }}">Журналист</a>
         </nav>
     </div>
 </header>

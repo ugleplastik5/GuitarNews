@@ -125,3 +125,62 @@ a {
     border-bottom: 2px solid #f5a623;
     margin-bottom: 20px;
 }
+
+.article-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 700px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.article-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.article-form input,
+.article-form select,
+.article-form textarea {
+    font-family: inherit;
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-weight: 400;
+    color: #1d1d1f;
+}
+
+.article-form input:focus,
+.article-form select:focus,
+.article-form textarea:focus {
+    outline: none;
+    border-color: #f5a623;
+}
+
+.article-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.btn-primary {
+    align-self: flex-start;
+    background: #f5a623;
+    color: #1d1d1f;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #e09616;
+}
