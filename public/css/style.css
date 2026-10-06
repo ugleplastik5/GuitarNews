@@ -1,0 +1,308 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background: #f5f5f7;
+    color: #1d1d1f;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page main {
+    flex: 1;
+    padding-bottom: 60px;
+}
+
+.site-header {
+    background: #1d1d1f;
+    color: #fff;
+    padding: 18px 0;
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 700;
+    color: #f5a623;
+}
+
+.main-nav {
+    display: flex;
+    gap: 24px;
+}
+
+.main-nav a {
+    color: #ddd;
+    font-weight: 500;
+}
+
+.main-nav a:hover { color: #f5a623; }
+
+.page-title {
+    font-size: 32px;
+    padding: 40px 0 20px;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.news-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.news-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.news-body { padding: 18px; }
+
+.tag {
+    display: inline-block;
+    background: #f5a623;
+    color: #1d1d1f;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.news-body h2 {
+    font-size: 19px;
+    margin-bottom: 10px;
+}
+
+.news-body p { color: #666; font-size: 14px; }
+
+.site-footer {
+    background: #1d1d1f;
+    color: #aaa;
+    padding: 24px 0;
+    text-align: center;
+}
+
+.category-block {
+    margin-bottom: 50px;
+}
+
+.category-title {
+    font-size: 26px;
+    padding: 20px 0 16px;
+    border-bottom: 2px solid #f5a623;
+    margin-bottom: 20px;
+}
+
+.article-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 700px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.article-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.article-form input,
+.article-form select,
+.article-form textarea {
+    font-family: inherit;
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-weight: 400;
+    color: #1d1d1f;
+}
+
+.article-form input:focus,
+.article-form select:focus,
+.article-form textarea:focus {
+    outline: none;
+    border-color: #f5a623;
+}
+
+.article-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.btn-primary {
+    align-self: flex-start;
+    background: #f5a623;
+    color: #1d1d1f;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #e09616;
+}
+
+.admin-block {
+    margin-bottom: 50px;
+}
+
+.admin-title {
+    font-size: 24px;
+    padding: 20px 0 14px;
+    border-bottom: 2px solid #f5a623;
+    margin-bottom: 20px;
+}
+
+.admin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.admin-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-info h3 {
+    font-size: 17px;
+    margin-bottom: 4px;
+}
+
+.admin-meta {
+    color: #666;
+    font-size: 13px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Кнопки */
+.btn-edit,
+.btn-ban,
+.btn-delete {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-edit {
+    background: #e6f0ff;
+    color: #1a4ea8;
+}
+.btn-edit:hover { background: #cfe0ff; }
+
+.btn-ban {
+    background: #fff3d6;
+    color: #8a5a00;
+}
+.btn-ban:hover { background: #ffe5a6; }
+
+.btn-delete {
+    background: #ffe0e0;
+    color: #a81a1a;
+}
+.btn-delete:hover { background: #ffc4c4; }
+
+/* Статусы */
+.status-ok {
+    color: #1e6b1e;
+    font-weight: 600;
+}
+.status-banned {
+    color: #a81a1a;
+    font-weight: 600;
+}
+
+/* Форма смены роли */
+.admin-form {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.admin-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.admin-form select {
+    font-family: inherit;
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 220px;
+    font-weight: 400;
+    color: #1d1d1f;
+}
+
+.admin-form select:focus {
+    outline: none;
+    border-color: #f5a623;
+}
