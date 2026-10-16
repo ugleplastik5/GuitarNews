@@ -14,39 +14,34 @@
     <main class="container">
         <h1 class="page-title">Новая статья</h1>
 
-        <form class="article-form">
+        @if (session('success'))
+            <div class="flash-success">{{ session('success') }}</div>
+        @endif
+
+        <form class="article-form" method="POST" action="{{ route('journalist.store') }}">
+            @csrf
 
             <label>
                 Заголовок
-                <input type="text" name="title" placeholder="Введите заголовок статьи">
+                <input type="text" name="title" placeholder="Введите заголовок статьи" required>
             </label>
 
             <label>
                 Категория
-                <select name="category">
-                    <option value="electric">Электрогитары</option>
-                    <option value="acoustic">Акустика</option>
-                    <option value="amps">Усилители</option>
+                <select name="category_id" required>
+                    <option value="">— Выберите категорию —</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
                 </select>
             </label>
 
             <label>
-                Тег
-                <input type="text" name="tag" placeholder="Например: Обзор">
-            </label>
-
-            <label>
-                Ссылка на картинку
-                <input type="url" name="image" placeholder="https://...">
-            </label>
-
-            <label>
                 Текст статьи
-                <textarea name="text" rows="10" placeholder="Текст новости..."></textarea>
+                <textarea name="text" rows="10" placeholder="Текст новости..." required></textarea>
             </label>
 
-            <button type="button" class="btn-primary">Опубликовать</button>
-
+            <button type="submit" class="btn-primary">Опубликовать</button>
         </form>
     </main>
 

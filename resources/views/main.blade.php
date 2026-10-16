@@ -7,53 +7,35 @@
 </head>
 <body>
 
-    <div class="page">
+<div class="page">
 
-        <x-header />
+    <x-header />
 
-        <main class="container">
-            <h1 class="page-title">Все новости</h1>
+    <main class="container">
+        <h1 class="page-title">Все новости</h1>
 
-            <section class="news-grid">
-
-                <article class="news-card">
+        <section class="news-grid">
+            @forelse ($articles as $article)
+                <a href="{{ route('article', $article) }}" class="news-card">
                     <div class="news-body">
-                        <span class="tag">Электрогитары</span>
-                        <h2>Обзор новой Fender Stratocaster 2025</h2>
-                        <p>Разбираем, что изменилось в легендарной модели.</p>
+                        <span class="category">{{ $article->category->name ?? 'Без категории' }}</span>
+                        <h2>{{ $article->title }}</h2>
+                        <p>{{ \Illuminate\Support\Str::limit($article->text, 100) }}</p>
+                        <div class="article-meta">
+                            Автор: {{ $article->author->login ?? 'Неизвестно' }}
+                            · {{ $article->created_at->format('d.m.Y') }}
+                        </div>
                     </div>
-                </article>
+                </a>
+            @empty
+                <p class="empty-message">Пока новостей нет.</p>
+            @endforelse
+        </section>
+    </main>
 
-                <article class="news-card">
-                    <div class="news-body">
-                        <span class="tag">Акустика</span>
-                        <h2>Топ-5 акустических гитар до 30 000 ₽</h2>
-                        <p>Подборка лучших бюджетных моделей.</p>
-                    </div>
-                </article>
+    <x-footer />
 
-                <article class="news-card">
-                    <div class="news-body">
-                        <span class="tag">Усилители</span>
-                        <h2>Ламповый или цифровой усилитель?</h2>
-                        <p>Сравниваем два подхода.</p>
-                    </div>
-                </article>
-
-                <article class="news-card">
-                    <div class="news-body">
-                        <span class="tag">Эффекты</span>
-                        <h2>Обзор педалей overdrive 2025 года</h2>
-                        <p>Новые модели, которые изменят ваш звук.</p>
-                    </div>
-                </article>
-
-            </section>
-        </main>
-
-        <x-footer />
-
-    </div>
+</div>
 
 </body>
 </html>
