@@ -6,17 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $fillable = [
-        'login',
-        'password',
-        'banned',
-        'role',
-    ];
-
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $fillable = ['login', 'password', 'role_id', 'banned'];
+    protected $hidden = ['password', 'remember_token'];
 
     protected function casts(): array
     {
@@ -26,13 +17,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function articles()
+    public function role()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function texts()
+    {
+        return $this->hasMany(Text::class);
     }
 
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role && $this->role->name === 'admin';
     }
 }

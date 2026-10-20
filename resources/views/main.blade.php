@@ -6,24 +6,20 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-
 <div class="page">
-
     <x-header />
-
     <main class="container">
         <h1 class="page-title">Все новости</h1>
-
         <section class="news-grid">
-            @forelse ($articles as $article)
-                <a href="{{ route('article', $article) }}" class="news-card">
+            @forelse ($texts as $text)
+                <a href="{{ route('article', $text) }}" class="news-card">
                     <div class="news-body">
-                        <span class="category">{{ $article->category->name ?? 'Без категории' }}</span>
-                        <h2>{{ $article->title }}</h2>
-                        <p>{{ \Illuminate\Support\Str::limit($article->text, 100) }}</p>
+                        <span class="category">{{ $text->category->name ?? 'Без категории' }}</span>
+                        <h2>{{ $text->heading }}</h2>
+                        <p>{{ \Illuminate\Support\Str::limit($text->text, 100) }}</p>
                         <div class="article-meta">
-                            Автор: {{ $article->author->login ?? 'Неизвестно' }}
-                            · {{ $article->created_at->format('d.m.Y') }}
+                            Автор: {{ $text->author->login ?? 'Неизвестно' }}
+                            · {{ $text->created_at ? $text->created_at->format('d.m.Y') : 'Дата неизвестна' }}
                         </div>
                     </div>
                 </a>
@@ -32,10 +28,7 @@
             @endforelse
         </section>
     </main>
-
     <x-footer />
-
 </div>
-
 </body>
 </html>
