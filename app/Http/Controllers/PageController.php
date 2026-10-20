@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Article;
+use App\Models\Text;
 use App\Models\Category;
 
 class PageController extends Controller
 {
     public function home()
     {
-        $articles = Article::with(['category', 'author'])->latest()->get();
-        return view('main', ['articles' => $articles]);
+        $texts = Text::with(['category', 'author'])->latest()->get();
+        return view('main', ['texts' => $texts]);
     }
 
     public function category()
     {
-        $categories = Category::with('articles.author')->get();
+        $categories = Category::with('texts.author')->get();
         return view('category', ['categories' => $categories]);
     }
 
@@ -25,8 +25,8 @@ class PageController extends Controller
         return view('journalist', ['categories' => $categories]);
     }
 
-    public function article(Article $article)
+    public function article(Text $text)
     {
-        return view('article', ['article' => $article]);
+        return view('article', ['text' => $text]);
     }
 }

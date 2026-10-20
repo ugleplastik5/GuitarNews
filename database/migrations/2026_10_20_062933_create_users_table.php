@@ -12,12 +12,12 @@ return new class extends Migration
             $table->id();
             $table->string('login')->unique();
             $table->string('password');
+            $table->foreignId('role_id')->default(3)->constrained('roles');
             $table->boolean('banned')->default(false);
-            $table->string('role')->default('journalist');
             $table->rememberToken();
             $table->timestamps();
         });
-
+        
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->foreignId('user_id')->nullable()->index();
@@ -30,7 +30,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('users');
     }
 };
