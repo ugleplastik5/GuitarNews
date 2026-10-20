@@ -7,8 +7,14 @@
             <a href="{{ url('/category') }}">Категории</a>
 
             @auth
-                <a href="{{ url('/journalist') }}">Журналист</a>
-                <a href="{{ url('/categories') }}">Категории (управление)</a>
+                @if(in_array(auth()->user()->role_id, [1, 2]))
+                    <a href="{{ url('/journalist') }}">Журналист</a>
+                    <a href="{{ url('/categories') }}">Управление категориями</a>
+                @endif
+
+                @if(auth()->user()->role_id == 1)
+                    <a href="{{ url('/admin') }}">Админка</a>
+                @endif
             @endauth
         </nav>
 

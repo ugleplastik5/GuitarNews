@@ -2,131 +2,93 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Админ — GuitarNews</title>
+    <title>Админ-панель — GuitarNews</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-
 <div class="page">
-
     <x-header />
-
     <main class="container">
         <h1 class="page-title">Панель администратора</h1>
 
+        @if (session('success'))
+            <div class="flash-success">{{ session('success') }}</div>
+        @endif
+
         <section class="admin-block">
             <h2 class="admin-title">Статьи</h2>
-
             <div class="admin-list">
-
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <h3>Обзор Fender Player II</h3>
-                        <p class="admin-meta">Электрогитары · Иван · 01.10.2025</p>
+                @forelse ($texts as $text)
+                    <div class="admin-item">
+                        <div class="admin-info">
+                            <h3>{{ $text->heading }}</h3>
+                            <p class="admin-meta">
+                                {{ $text->category->name ?? 'Без категории' }} · 
+                                Автор: {{ $text->author->login ?? 'Неизвестно' }} · 
+                                {{ $text->created_at ? $text->created_at->format('d.m.Y') : '' }}
+                                @if($text->blocked) · <span class="status-banned">Заблокирована</span> @endif
+                            </p>
+                        </div>
+                        <div class="admin-actions">
+                            <a href="{{ route('admin.texts.edit', $text) }}" class="btn-edit" style="text-decoration:none; padding:8px 14px; display:inline-block;">Редактировать</a>
+                            
+                            <form method="POST" action="{{ route('admin.texts.block', $text) }}">
+                                @csrf
+                                <button type="submit" class="btn-ban">
+                                    {{ $text->blocked ? 'Разблокировать' : 'Блокировать' }}
+                                </button>
+                            </form>
+                            
+                            <form method="POST" action="{{ route('admin.texts.delete', $text) }}">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete">Удалить</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="admin-actions">
-                        <button class="btn-edit" type="button">Редактировать</button>
-                        <button class="btn-ban" type="button">Блокировать</button>
-                        <button class="btn-delete" type="button">Удалить</button>
-                    </div>
-                </div>
-
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <h3>Топ акустик до 30 000 ₽</h3>
-                        <p class="admin-meta">Акустика · Мария · 29.09.2025</p>
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn-edit" type="button">Редактировать</button>
-                        <button class="btn-ban" type="button">Блокировать</button>
-                        <button class="btn-delete" type="button">Удалить</button>
-                    </div>
-                </div>
-
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <h3>Ламповый или цифровой?</h3>
-                        <p class="admin-meta">Усилители · Пётр · 28.09.2025</p>
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn-edit" type="button">Редактировать</button>
-                        <button class="btn-ban" type="button">Блокировать</button>
-                        <button class="btn-delete" type="button">Удалить</button>
-                    </div>
-                </div>
-
+                @empty
+                    <p>Статей нет.</p>
+                @endforelse
             </div>
         </section>
 
         <section class="admin-block">
             <h2 class="admin-title">Пользователи</h2>
-
             <div class="admin-list">
-
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <h3>Иван</h3>
-                        <p class="admin-meta">ivan@mail.com · Журналист · <span class="status-ok">Активен</span></p>
+                @foreach ($users as $user)
+                    <div class="admin-item">
+                        <div class="admin-info">
+                            <h3>{{ $user->login }}</h3>
+                            <p class="admin-meta">
+                                Роль: {{ $user->role->name ?? 'Нет' }} · 
+                                @if($user->banned) <span class="status-banned">Забанен</span> @else <span class="status-ok">Активен</span> @endif
+                            </p>
+                        </div>
+                        <div class="admin-actions">
+                            <form method="POST" action="{{ route('admin.users.role', $user) }}">
+                                @csrf
+                                <select name="role_id" onchange="this.form.submit()" class="role-select" style="padding: 8px; border-radius: 6px;">
+                                    @foreach($roles as $role)
+                                        <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                            {{ $role->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                            
+                            <form method="POST" action="{{ route('admin.users.ban', $user) }}">
+                                @csrf
+                                <button type="submit" class="btn-ban">
+                                    {{ $user->banned ? 'Разбанить' : 'Забанить' }}
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="admin-actions">
-                        <button class="btn-ban" type="button">Забанить</button>
-                    </div>
-                </div>
-
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <h3>Мария</h3>
-                        <p class="admin-meta">maria@mail.com · Журналист · <span class="status-ok">Активен</span></p>
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn-ban" type="button">Забанить</button>
-                    </div>
-                </div>
-
-                <div class="admin-item">
-                    <div class="admin-info">
-                        <h3>Пётр</h3>
-                        <p class="admin-meta">petr@mail.com · Журналист · <span class="status-banned">Забанен</span></p>
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn-edit" type="button">Разбанить</button>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
         </section>
-
-        <section class="admin-block">
-            <h2 class="admin-title">Изменение роли пользователя</h2>
-
-            <form class="admin-form">
-                <label>
-                    Пользователь
-                    <select name="user">
-                        <option>Иван (ivan@mail.com)</option>
-                        <option>Мария (maria@mail.com)</option>
-                        <option>Пётр (petr@mail.com)</option>
-                    </select>
-                </label>
-
-                <label>
-                    Новая роль
-                    <select name="role">
-                        <option>Пользователь</option>
-                        <option>Журналист</option>
-                        <option>Администратор</option>
-                    </select>
-                </label>
-
-                <button type="button" class="btn-primary">Сохранить</button>
-            </form>
-        </section>
-
     </main>
-
     <x-footer />
-
 </div>
-
 </body>
 </html>
